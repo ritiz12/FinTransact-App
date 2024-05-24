@@ -1,70 +1,72 @@
+
 package com.example.App1.userDetails.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import com.example.App1.accounts.domain.Account;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
-
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "UserInformation")
 public class UserInformation {
 
 
+
     @Id
-    @Column(name = "id" , updatable = false , nullable = false)
-    private Long id ;
 
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
-    @Column(name = "firstName" , updatable = false , nullable = true)
-    private String firstName ;
+    @Column(name = "first_name", updatable = false, nullable = true)
+    private String firstName;
 
+    @Column(name = "last_name", updatable = false, nullable = false)
+    private String lastName;
 
-    @Column(name = "lastName" , updatable = false , nullable = false)
-    private String lastName ;
+    @Column(name = "gender", updatable = false, nullable = false)
+    private String gender;
 
+    @Column(name = "email", updatable = true, nullable = false)
+    private String email;
 
-    @Column(name = "gender" , updatable = false , nullable = false)
-    private String gender ;
+    @Column(name = "phone_no", updatable = true, nullable = false)
+    private Long phoneNo;
 
-
-    @Column(name = "email" , updatable = false , nullable = false)
-    private String email ;
-
-
-    @Column(name = "phoneNo" , updatable = true , nullable = false)
-    private Long phoneNo ;
-
-    @Column(name = "address" , updatable = true , nullable = false)
-    private  String address  ;
+    @Column(name = "address", updatable = true, nullable = false)
+    private String address;
 
 
 
-    @Column(name = "accountNumber" , updatable = false , nullable = false)
-    private Long accountNumber ;
+    @Column(name = "account_number", updatable = false, nullable = false)
+    private Long accountNumber;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "account_created_date", updatable = false, nullable = false)
+    private Date accountCreatedDate;
 
-    @Column(name = "accountCreatedDate" , updatable = false , nullable = false)
-    private Date accountCreatedDate ;
+    @Column(name = "account_status", updatable = true, nullable = false)
+    private String accountStatus;
 
+    @Column(name = "account_balance", updatable = true, nullable = true)
+    private BigDecimal accountBalance;
 
-    @Column(name = "accountStatus" , updatable = true , nullable = false)
-    private String accountStatus ;
+    @OneToMany(mappedBy = "userInformation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Account> accounts = new HashSet<>();
 
+   /* @OneToMany(mappedBy = "userInformation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TransactionHistory> transactionHistories = new HashSet<>();
 
-    @Column(name = "accountBalance" , updatable = true , nullable = true)
-    private BigDecimal accountBalance ;
+    */
 
-    UserInformation()
-    {
+    // Default constructor
+    public UserInformation() {
         super();
     }
 
+    // Parameterized constructor
     public UserInformation(Long id, String firstName, String lastName, String gender, String email, Long phoneNo, String address, Long accountNumber, Date accountCreatedDate, String accountStatus, BigDecimal accountBalance) {
         this.id = id;
         this.firstName = firstName;
@@ -79,6 +81,7 @@ public class UserInformation {
         this.accountBalance = accountBalance;
     }
 
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -87,7 +90,7 @@ public class UserInformation {
         this.id = id;
     }
 
-    public String getFirstname() {
+    public String getFirstName() {
         return firstName;
     }
 
@@ -124,7 +127,7 @@ public class UserInformation {
     }
 
     public void setPhoneNo(Long phoneNo) {
-        phoneNo = phoneNo;
+        this.phoneNo = phoneNo;
     }
 
     public String getAddress() {
@@ -165,5 +168,33 @@ public class UserInformation {
 
     public void setAccountBalance(BigDecimal accountBalance) {
         this.accountBalance = accountBalance;
+    }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+   /* public Set<TransactionHistory> getTransactionHistories() {
+        return transactionHistories;
+    }
+
+    public void setTransactionHistories(Set<TransactionHistory> transactionHistories) {
+        this.transactionHistories = transactionHistories;
+    }
+
+    */
+
+    public void addAccount(Account account) {
+        accounts.add(account);
+        account.setUserInformation(this);
+    }
+
+    public void removeAccount(Account account) {
+        accounts.remove(account);
+        account.setUserInformation(null);
     }
 }
