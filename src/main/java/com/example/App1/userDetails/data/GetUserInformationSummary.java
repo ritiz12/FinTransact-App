@@ -22,6 +22,8 @@ public class GetUserInformationSummary {
 
     final private BigDecimal accountBalance;
 
+
+
     public GetUserInformationSummary(String firstName, String lastName, String gender, String email, Long phoneNo, String address, Long accountNumber, Date accountCreatedDate, String accountStatus, BigDecimal accountBalance) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,6 +36,8 @@ public class GetUserInformationSummary {
         this.accountStatus = accountStatus;
         this.accountBalance = accountBalance;
     }
+
+
 
     public String getFirstName() {
         return firstName;

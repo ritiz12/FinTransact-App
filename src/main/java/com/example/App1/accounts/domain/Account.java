@@ -11,6 +11,7 @@ import java.util.Date;
 @Table(name = "Account")
 public class Account {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id ;
@@ -25,6 +26,7 @@ public class Account {
 
     @Column(name = "accountBalance", nullable = true , updatable = true)
     private BigDecimal accountBalance;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id" , nullable = false)
@@ -50,6 +52,8 @@ public class Account {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
     public Long getAccountNumber() {
         return accountNumber;

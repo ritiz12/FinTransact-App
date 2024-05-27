@@ -2,6 +2,7 @@
 package com.example.App1.userDetails.domain;
 
 import com.example.App1.accounts.domain.Account;
+import com.example.App1.accounts.domain.TransactionHistory;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -12,8 +13,6 @@ import java.util.Set;
 @Entity
 @Table(name = "UserInformation")
 public class UserInformation {
-
-
 
     @Id
 
@@ -56,10 +55,10 @@ public class UserInformation {
     @OneToMany(mappedBy = "userInformation", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Account> accounts = new HashSet<>();
 
-   /* @OneToMany(mappedBy = "userInformation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userInformation", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TransactionHistory> transactionHistories = new HashSet<>();
 
-    */
+
 
     // Default constructor
     public UserInformation() {
@@ -178,7 +177,7 @@ public class UserInformation {
         this.accounts = accounts;
     }
 
-   /* public Set<TransactionHistory> getTransactionHistories() {
+    public Set<TransactionHistory> getTransactionHistories() {
         return transactionHistories;
     }
 
@@ -186,7 +185,7 @@ public class UserInformation {
         this.transactionHistories = transactionHistories;
     }
 
-    */
+
 
     public void addAccount(Account account) {
         accounts.add(account);
