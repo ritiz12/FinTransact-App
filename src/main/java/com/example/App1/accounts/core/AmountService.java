@@ -5,8 +5,6 @@ import com.example.App1.accounts.domain.Account;
 import com.example.App1.accounts.domain.TransactionHistory;
 import com.example.App1.accounts.persistence.AccountRepository;
 import com.example.App1.accounts.persistence.TransactionHistoryRepository;
-import com.example.App1.userDetails.data.GetUserInformationResponse;
-import com.example.App1.userDetails.data.GetUserInformationSummary;
 import com.example.App1.userDetails.domain.UserInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -162,5 +160,27 @@ public class AmountService {
     }
 
 
+    public GetTransactionHistoryResponse getMonthlyTransaction(Long accountNumber, GetDateWiseTransactionHistoryRequest request) {
 
+        Date date = request.getDate();
+        System.out.println(date);
+        List<TransactionHistory> transactionHistories = transactionHistoryRepository.findByAccountNumberTransactionDate(accountNumber , date);
+        System.out.println(transactionHistories);
+        GetTransactionHistoryResponse response = new GetTransactionHistoryResponse();
+
+        for (TransactionHistory transactionHistory : transactionHistories) {
+            GetTransactionHistorySummary summary = new GetTransactionHistorySummary(
+                    transactionHistory.getTransactionId(),
+                    transactionHistory.getAccountNumber(),
+                    transactionHistory.getToAccountNumber(),
+                    transactionHistory.getTransactionDate(),
+                    transactionHistory.getTransactionStatus(),
+                    transactionHistory.getTransferAmount()
+            );
+            response.addTransactionHistoryRecord(summary);
+        }
+
+        return response;
+
+    }
 }
