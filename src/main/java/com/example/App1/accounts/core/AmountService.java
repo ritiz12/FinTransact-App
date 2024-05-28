@@ -160,7 +160,7 @@ public class AmountService {
     }
 
 
-    public GetTransactionHistoryResponse getMonthlyTransaction(Long accountNumber, GetDateWiseTransactionHistoryRequest request) {
+    public GetTransactionHistoryResponse getDateWiseTransaction(Long accountNumber, GetDateWiseTransactionHistoryRequest request) {
 
         Date date = request.getDate();
         System.out.println(date);

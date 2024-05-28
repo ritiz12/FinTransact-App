@@ -58,9 +58,9 @@ public class AmountController {
     }
 
     @GetMapping("/dateWiseTransaction/{accountNumber}")
-    ResponseEntity<GetTransactionHistoryResponse> getMonthlyTransaction(@PathVariable Long accountNumber, @RequestBody GetDateWiseTransactionHistoryRequest request)
+    ResponseEntity<GetTransactionHistoryResponse> getDateWiseTransaction(@PathVariable Long accountNumber, @RequestBody GetDateWiseTransactionHistoryRequest request)
     {
-        final var response = amountService.getMonthlyTransaction(accountNumber , request);
+        final var response = amountService.getDateWiseTransaction(accountNumber , request);
         return ResponseEntity.ok(response);
     }
 
